@@ -1,11 +1,15 @@
-var assert = require('assert');
+'use strict';
 
-var markdownIt = require('markdown-it');
-var markdownItAttribution = require('../');
+/*eslint-env mocha*/
+
+let assert = require('assert');
+
+let markdownIt = require('@gerhobbelt/markdown-it');
+let markdownItAttribution = require('../');
 
 describe('The plugin api', function () {
   it('should make the marker configurable', function () {
-    var output = markdownIt()
+    let output = markdownIt()
       .use(markdownItAttribution, { marker: '--' })
       .render('> Quotation\n> -- Attribution');
 
@@ -13,7 +17,7 @@ describe('The plugin api', function () {
   });
 
   it('should make the html class added to the elements configurable', function () {
-    var output = markdownIt()
+    let output = markdownIt()
       .use(markdownItAttribution, { classNameContainer: 'c-quote', classNameAttribution: 'c-quote__attribution' })
       .render('> Quotation\n> — Attribution');
 
@@ -21,7 +25,7 @@ describe('The plugin api', function () {
   });
 
   it('should not add a class to elements if a falsy value is provided', function () {
-    var output = markdownIt()
+    let output = markdownIt()
       .use(markdownItAttribution, { classNameContainer: null, classNameAttribution: null })
       .render('> Quotation\n> — Attribution');
 
@@ -29,7 +33,7 @@ describe('The plugin api', function () {
   });
 
   it('should keep the marker in the attribution line if desired', function () {
-    var output = markdownIt()
+    let output = markdownIt()
       .use(markdownItAttribution, { removeMarker: false })
       .render('> Quotation\n> — Attribution');
 

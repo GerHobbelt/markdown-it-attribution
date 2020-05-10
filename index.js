@@ -1,4 +1,8 @@
-module.exports = function attributionPlugin (md, options) {
+
+'use strict';
+
+
+module.exports = function attributionPlugin(md, options) {
   /**
    * A regular expression matching common URL patterns.
    *
@@ -6,14 +10,14 @@ module.exports = function attributionPlugin (md, options) {
    *
    * @type {RegExp}
    */
-  var REGEX_URL = /https?:\/\/[^\s/$.?#()].[^\s()]*/i;
+  let REGEX_URL = /https?:\/\/[^\s/$.?#()].[^\s()]*/i;
 
   /**
    * An enumeration of token types.
    *
    * @type {Object<string,string>}
    */
-  var TokenType = {
+  let TokenType = {
     BLOCKQUOTE_OPEN: 'blockquote_open',
     BLOCKQUOTE_CLOSE: 'blockquote_close'
   };
@@ -23,7 +27,7 @@ module.exports = function attributionPlugin (md, options) {
    *
    * @type {Object}
    */
-  var Defaults = {
+  let Defaults = {
     classNameContainer: 'c-blockquote',
     classNameAttribution: 'c-blockquote__attribution',
     marker: '—', // EM dash
@@ -36,7 +40,7 @@ module.exports = function attributionPlugin (md, options) {
    *
    * @type {Function}
    */
-  var assign = md.utils.assign;
+  let assign = md.utils.assign;
 
   /**
    * Prepare the plugin options and merge user options with the defauls.
@@ -51,7 +55,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {*} value The value to inspect.
    * @return {Boolean}
    */
-  function isInteger (value) {
+  function isInteger(value) {
     return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
   }
 
@@ -61,7 +65,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} str The string to inspect.
    * @return {Boolean}
    */
-  function isEmpty (str) {
+  function isEmpty(str) {
     return !str || (str.length === 0) || (str.trim().length === 0);
   }
 
@@ -72,7 +76,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} prop The property to test for.
    * @return {Boolean}
    */
-  function has (obj, prop) {
+  function has(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
@@ -82,8 +86,8 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} str The string to extract an url from.
    * @return {string}
    */
-  function extractUrl (str) {
-    var matches = str.match(REGEX_URL);
+  function extractUrl(str) {
+    let matches = str.match(REGEX_URL);
     return matches !== null
       ? matches.shift()
       : null;
@@ -96,7 +100,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} needle The string to search for.
    * @return {Boolean}
    */
-  function startsWith (str, needle) {
+  function startsWith(str, needle) {
     return str.slice(0, needle.length) === needle;
   }
 
@@ -106,7 +110,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} str The string to trim.
    * @return {string}
    */
-  function trimStart (str) {
+  function trimStart(str) {
     return str.replace(/^\s+/, '');
   }
 
@@ -116,7 +120,7 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} str The string to trim.
    * @return {string}
    */
-  function trimEnd (str) {
+  function trimEnd(str) {
     return str.replace(/\s+$/, '');
   }
 
@@ -127,8 +131,8 @@ module.exports = function attributionPlugin (md, options) {
    * @param {Object[]} items One or multiple items to add.
    * @param {Number} position The index position at which to add the items.
    */
-  function insertAt (array, items, position) {
-    for (var i = 0, l = items.length; i < l; i++) {
+  function insertAt(array, items, position) {
+    for (let i = 0, l = items.length; i < l; i++) {
       array.splice(position + i, 0, items[i]);
     }
   }
@@ -141,12 +145,12 @@ module.exports = function attributionPlugin (md, options) {
    * @param {Number} [to=array.length-1] The index at which to stop deletion.
    * @return {Number}
    */
-  function remove (array, from, to) {
+  function remove(array, from, to) {
     from = isInteger(from) ? from : 0;
     to = isInteger(to) ? to : array.length - 1;
 
-    var amount = to - from;
-    var items = array.splice(from, amount);
+    let amount = to - from;
+    let items = array.splice(from, amount);
 
     return items.length;
   }
@@ -158,8 +162,8 @@ module.exports = function attributionPlugin (md, options) {
    * @param {Object} props The collection of property values to test.
    * @return {Boolean}
    */
-  function matches (obj, props) {
-    for (var prop in props) {
+  function matches(obj, props) {
+    for (let prop in props) {
       if (has(props, prop) && (props[prop] !== obj[prop])) {
         return false;
       }
@@ -176,10 +180,10 @@ module.exports = function attributionPlugin (md, options) {
    * @param {Number} [position=0] The start index to start searching from.
    * @return {Number}
    */
-  function findToken (tokens, props, position) {
+  function findToken(tokens, props, position) {
     position = isInteger(position) ? position : 0;
 
-    for (var i = position, l = tokens.length; i < l; i++) {
+    for (let i = position, l = tokens.length; i < l; i++) {
       if (matches(tokens[i], props)) {
         return i;
       }
@@ -198,15 +202,15 @@ module.exports = function attributionPlugin (md, options) {
    * @param {string} marker The marker to search for.
    * @return {Number}
    */
-  function findMarker (str, marker) {
+  function findMarker(str, marker) {
     // Return early if the paragraph starts with the marker.
     if (startsWith(str, marker)) {
       return 0;
     }
 
     // Search for the marker following a soft break.
-    var length = marker.length;
-    var position = str.indexOf('\n' + marker, length + 1);
+    let length = marker.length;
+    let position = str.indexOf('\n' + marker, length + 1);
 
     return (position > length) ? position + 1 : -1;
   }
@@ -221,20 +225,20 @@ module.exports = function attributionPlugin (md, options) {
    * @param {Number} [to=tokens.length-1] The upper boundary to stop searching.
    * @return {Number}
    */
-  function findAttribution (tokens, marker, level, from, to) {
+  function findAttribution(tokens, marker, level, from, to) {
     level = isInteger(level) ? level : 0;
     from = isInteger(from) ? from : 0;
     to = isInteger(to) ? to : tokens.length;
 
-    for (var i = from; i < to; i++) {
-      var token = tokens[i];
-      var content = token.content;
+    for (let i = from; i < to; i++) {
+      let token = tokens[i];
+      let content = token.content;
 
       if ((token.type !== 'inline') || (token.level !== level + 2) || (content.length === 0)) {
         continue;
       }
 
-      var position = findMarker(content, marker);
+      let position = findMarker(content, marker);
 
       if (position !== -1) {
         return i;
@@ -253,20 +257,20 @@ module.exports = function attributionPlugin (md, options) {
    * @param {MarkdownIt.StateCore} state The current state of the parser.
    * @return {void}
    */
-  function rule (state) {
-    var tokens = state.tokens;
+  function rule(state) {
+    let tokens = state.tokens;
 
-    for (var i = 0, l = tokens.length; i < l; i++) {
+    for (let i = 0, l = tokens.length; i < l; i++) {
       // Find the opening tag of the next blockquote.
-      var start = findToken(tokens, { type: TokenType.BLOCKQUOTE_OPEN }, i);
+      let start = findToken(tokens, { type: TokenType.BLOCKQUOTE_OPEN }, i);
 
       if (start === -1) {
         continue;
       }
 
       // Find the closing tag of the current block quote.
-      var level = tokens[start].level;
-      var end = findToken(tokens, { type: TokenType.BLOCKQUOTE_CLOSE, level: level }, start + 1);
+      let level = tokens[start].level;
+      let end = findToken(tokens, { type: TokenType.BLOCKQUOTE_CLOSE, level: level }, start + 1);
 
       /* istanbul ignore if */
       if (end === -1) {
@@ -274,7 +278,7 @@ module.exports = function attributionPlugin (md, options) {
       }
 
       // Find the attribution line of the current block quote.
-      var position = findAttribution(tokens, options.marker, level, start + 1, end);
+      let position = findAttribution(tokens, options.marker, level, start + 1, end);
 
       if (position === -1) {
         continue;
@@ -282,17 +286,17 @@ module.exports = function attributionPlugin (md, options) {
 
       // Increase the level of each block quote token as it will be wrapped in a
       // container element.
-      for (var j = start; j <= end; j++) {
+      for (let j = start; j <= end; j++) {
         tokens[j].level++;
       }
 
       // Remove the attribution line from the rest of the paragraph.
-      var token = tokens[position];
-      var source = token.content;
-      var index = findMarker(source, options.marker);
+      let token = tokens[position];
+      let source = token.content;
+      let index = findMarker(source, options.marker);
 
-      var content = (index > 0) ? trimEnd(source.slice(0, index)) : null;
-      var attribution = (index > 0) ? source.slice(index) : source;
+      let content = (index > 0) ? trimEnd(source.slice(0, index)) : null;
+      let attribution = (index > 0) ? source.slice(index) : source;
 
       token.content = content;
 
@@ -302,26 +306,26 @@ module.exports = function attributionPlugin (md, options) {
       }
 
       // Use any url found in the attribution line as the cite attribute.
-      var blockquoteOpen = tokens[start];
-      var url = extractUrl(attribution);
+      let blockquoteOpen = tokens[start];
+      let url = extractUrl(attribution);
 
       if (!isEmpty(url)) {
         blockquoteOpen.attrSet('cite', url);
       }
 
       // Create new tokens for the attribution line.
-      var captionOpen = new state.Token('blockquote_attribution_open', 'figcaption', 1);
+      let captionOpen = new state.Token('blockquote_attribution_open', 'figcaption', 1);
       captionOpen.block = true;
       captionOpen.level = level + 1;
 
-      var caption = new state.Token('inline', '', 0);
+      let caption = new state.Token('inline', '', 0);
       caption.children = [];
       caption.level = level + 2;
       caption.content = options.removeMarker
         ? trimStart(attribution.slice(options.marker.length))
         : attribution;
 
-      var captionClose = new state.Token('blockquote_attribution_close', 'figcaption', -1);
+      let captionClose = new state.Token('blockquote_attribution_close', 'figcaption', -1);
       captionClose.block = true;
       captionClose.level = level + 1;
 
@@ -329,14 +333,14 @@ module.exports = function attributionPlugin (md, options) {
         captionOpen.attrSet('class', options.classNameAttribution);
       }
 
-      insertAt(tokens, [captionOpen, caption, captionClose], end + 1);
+      insertAt(tokens, [ captionOpen, caption, captionClose ], end + 1);
 
       // Wrap block quote and attribution in a figure element.
-      var figureOpen = new state.Token('blockquote_container_open', 'figure', 1);
+      let figureOpen = new state.Token('blockquote_container_open', 'figure', 1);
       figureOpen.block = true;
       figureOpen.level = level;
 
-      var figureClose = new state.Token('blockquote_container_close', 'figure', -1);
+      let figureClose = new state.Token('blockquote_container_close', 'figure', -1);
       figureClose.block = true;
       figureClose.level = level;
 
@@ -344,8 +348,8 @@ module.exports = function attributionPlugin (md, options) {
         figureOpen.attrSet('class', options.classNameContainer);
       }
 
-      insertAt(tokens, [figureClose], end + 4);
-      insertAt(tokens, [figureOpen], start);
+      insertAt(tokens, [ figureClose ], end + 4);
+      insertAt(tokens, [ figureOpen ], start);
 
       // Skip the generated block quote tokens in the stream.
       i = end + 5;

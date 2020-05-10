@@ -9,7 +9,7 @@
 > generated output follows the suggestions in the living standard of the
 > [WHATWG](https://html.spec.whatwg.org/multipage/grouping-content.html#the-blockquote-element).
 
-**Requires `markdown-it` v5.+**
+**Requires `markdown-it` v10.+**
 
 The plugin allows to provide an attribution for a quotation:
 
@@ -116,4 +116,4 @@ I wanted to add an attribution line to the generated markup of some of my block 
 
 ## License
 
-[MIT](https://github.com/dweidner/markdown-it-attribution/blob/master/LICENSE.txt)
+[MIT](https://github.com/GerHobbelt/markdown-it-attribution/blob/master/LICENSE.txt)

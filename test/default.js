@@ -1,8 +1,12 @@
-var path = require('path');
-var generate = require('markdown-it-testgen');
+'use strict';
+
+/*eslint-env mocha*/
+
+let path = require('path');
+let generate = require('@gerhobbelt/markdown-it-testgen');
 
 describe('default attribution', function () {
-  var md = require('markdown-it')()
+  let md = require('@gerhobbelt/markdown-it')()
     .use(require('../'));
 
   generate(path.join(__dirname, 'fixtures/default.txt'), md);
