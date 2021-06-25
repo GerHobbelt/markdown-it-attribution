@@ -1,4 +1,4 @@
-/*! markdown-it-attribution 0.1.4-3 https://github.com//GerHobbelt/markdown-it-attribution @license MIT */
+/*! markdown-it-attribution 0.1.4-4 https://github.com//GerHobbelt/markdown-it-attribution @license MIT */
 
 function attributionPlugin(md, options) {
   /**
