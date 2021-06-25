@@ -353,6 +353,9 @@ export default function attributionPlugin(md, options) {
 
       // Skip the generated block quote tokens in the stream.
       i = end + 5;
+
+      // Update the length of the token stream.
+      l = l + 4;
     }
   }
 
