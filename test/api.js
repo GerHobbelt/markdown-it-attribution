@@ -1,11 +1,9 @@
-'use strict';
-
 /*eslint-env mocha*/
 
-let assert = require('assert');
+import assert from 'assert';
 
-let markdownIt = require('@gerhobbelt/markdown-it');
-let markdownItAttribution = require('../');
+import markdownIt from '@gerhobbelt/markdown-it';
+import markdownItAttribution from '../index.js';
 
 describe('The plugin api', function () {
   it('should make the marker configurable', function () {

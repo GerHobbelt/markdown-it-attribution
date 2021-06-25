@@ -1,8 +1,8 @@
 
-'use strict';
 
 
-module.exports = function attributionPlugin(md, options) {
+
+export default function attributionPlugin(md, options) {
   /**
    * A regular expression matching common URL patterns.
    *
@@ -357,4 +357,4 @@ module.exports = function attributionPlugin(md, options) {
   }
 
   md.core.ruler.after('block', 'attribution', rule);
-};
+}

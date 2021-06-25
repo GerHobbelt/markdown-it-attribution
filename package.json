@@ -12,7 +12,12 @@
   ],
   "repository": "GerHobbelt/markdown-it-attribution",
   "license": "MIT",
-  "main": "index.js",
+  "type": "module",
+  "source": "index.js",
+  "main": "dist/markdownItAttribution.js",
+  "engines": {
+    "node": ">=12.20.0"
+  },
   "scripts": {
     "build": "make",
     "test": "make test",
@@ -25,24 +30,28 @@
     "cov": "make report-coverage",
     "pub": "npm publish --access public"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
-    "@gerhobbelt/markdown-it": "10.0.0-34",
-    "@gerhobbelt/markdown-it-testgen": "0.1.6-7",
-    "browserify": "16.5.1",
-    "chai": "4.2.0",
-    "cross-env": "7.0.2",
-    "eslint": "7.0.0",
-    "mocha": "7.1.2",
-    "nyc": "15.0.1",
-    "rollup": "2.9.0",
-    "rollup-plugin-commonjs": "10.1.0",
-    "rollup-plugin-json": "4.0.0",
-    "rollup-plugin-node-resolve": "5.2.0",
-    "terser": "4.6.13"
+    "@gerhobbelt/markdown-it": "12.0.6-55",
+    "@gerhobbelt/markdown-it-testgen": "0.1.6-17",
+    "@gerhobbelt/prepend-header": "1.1.0-7",
+    "argparse": "2.0.1",
+    "cross-env": "7.0.3",
+    "eslint": "7.29.0",
+    "microbundle": "0.13.3",
+    "mocha": "9.0.1",
+    "nyc": "15.1.0"
+  },
+  "dependencies": {
+    "@gerhobbelt/markdown-it-regexp": "0.6.0-13",
+    "sanitize-filename": "1.6.3"
   },
   "reporter": [
     "lcov",
     "text",
+    "html",
     "text-summary"
   ]
 }
