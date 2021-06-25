@@ -355,7 +355,7 @@ export default function attributionPlugin(md, options) {
       i = end + 5;
 
       // Update the length of the token stream.
-      l = l + 4;
+      l += 4;
     }
   }
 

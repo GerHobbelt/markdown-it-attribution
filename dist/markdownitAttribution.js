@@ -1,4 +1,4 @@
-/*! markdown-it-attribution 0.1.2-3 https://github.com//GerHobbelt/markdown-it-attribution @license MIT */
+/*! markdown-it-attribution 0.1.4-3 https://github.com//GerHobbelt/markdown-it-attribution @license MIT */
 
 function attributionPlugin(md, options) {
   /**
@@ -354,10 +354,9 @@ function attributionPlugin(md, options) {
       insertAt(tokens, [figureClose], end + 4);
       insertAt(tokens, [figureOpen], start); // Skip the generated block quote tokens in the stream.
 
-      i = end + 5;
+      i = end + 5; // Update the length of the token stream.
 
-      // Update the length of the token stream.
-      l = l + 4;
+      l += 4;
     }
   }
 
